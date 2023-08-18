@@ -109,7 +109,7 @@ const Registration = () => {
 
                     setload(false)
 
-                    toast.success('👍 Registration Sucessfull! Please veify your email', {
+                    toast.success('👍 egistration Sucessfull! Please veify your email', {
                         position: "bottom-left",
                         autoClose: 2000,
                         hideProgressBar: false,
