@@ -1,0 +1,178 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+:root{
+    --poppins: 'Poppins', sans-serif;
+    --open-sans: 'Open Sans', sans-serif;
+    --nunito: 'Nunito', sans-serif;
+}
+
+
+
+.registration{
+    display: flex;
+}
+
+
+.registration .left{
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    
+}
+.registration .left .text_container{
+        width: 60%;
+        
+}
+.registration .left .text_container2{
+        width: 60%;
+        
+}
+
+.registration .right{
+    width: 50%;
+    height: 100vh;
+    
+    
+    
+}
+
+.registration .bg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+
+}
+
+.text_container h2{
+    font-family: var(--nunito);
+    font-size: 34px;
+    font-weight: bold;
+    color: #11175D;
+}
+.text_container2 h2{
+    font-family: var(--nunito);
+    font-size: 34px;
+    font-weight: bold;
+    color: #11175D;
+    margin-bottom: 160px;
+}
+.text_container .freeregister{
+    font-family: var(--nunito);
+    font-size: 20px;
+    font-weight:100;
+    margin-bottom: 40px;
+    color: #000000;
+    
+}
+
+.inputcss{
+    width: 368px;
+    
+    margin: 20px 0 !important;
+    
+}
+
+.text_container label{
+    font-family: var(--nunito);
+    font-size: 13px;
+    font-weight: 600;
+}
+.text_container2 label{
+    font-family: var(--nunito);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.focus{
+    font-family: var(--open-sans);
+    font-size: 13px;
+    font-weight: bold;
+    color: #EA6C00;
+    text-decoration: none;
+}
+
+.account1{
+    font-weight: 100;
+    font-family: var(--open-sans);
+    margin-top: 35px;
+    font-size: 13px;
+    margin-left: 20px;
+    
+    
+}
+.account2{
+    font-weight: 100;
+    font-family: var(--open-sans);
+    margin-top: 35px;
+    font-size: 13px;
+    margin-left: 20px;
+    
+    
+}
+
+.alert{
+    width: 368px;
+    margin-top: -10px;
+    padding: 6px 0 !important;
+
+}
+
+.alert svg{
+    margin-left: 10px;
+}
+
+/* buttons */
+
+.text_container button{
+    margin-top: 51px;
+}
+.text_container2 button{
+    margin-top: 55px;
+}
+
+.Signupbutton{
+    width: 368px;
+    height: 67px;
+    background: #5F35F5 !important;
+    border-radius: 50px !important;
+    padding: 20px 132px !important;
+    font-family: var(--nunito) !important;
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    text-transform: none !important;
+    
+}
+.Loginbutton{
+    width: 405px;
+    height: 81px;
+    background: #5F35F5 !important;
+    border-radius: 10px !important;
+    padding: 34px 113px !important;
+    font-family: var(--open-sans) !important;
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    text-transform: none !important;
+    letter-spacing: 0rem !important;
+    
+}
+
+.eye{
+    position: relative;
+    top: 40px;
+    right: 30px;
+}
+.eye2{
+    position: relative;
+    top: 40px;
+    right: 20px;
+}
+
+
+
