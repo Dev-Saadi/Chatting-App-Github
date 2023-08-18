@@ -161,7 +161,7 @@ const Registration = () => {
         <div className='text_container'>
 
             <h2>Get started with easily register</h2>
-            <p className='freeregister'>Free egister and you can enjoy it</p>
+            <p className='freeregister'>Free register and you can enjoy it</p>
 
             <TextField onChange={handleChange} name="fullname" className='inputcss' type='text' id="outlined-basic" label="Full name" variant="outlined" value={formdata.fullname} />
 
