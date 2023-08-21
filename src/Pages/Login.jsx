@@ -125,6 +125,24 @@ const Login = () => {
         setload(false)
 
       })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        if (!errorCode.includes("email")) {
+          toast.error('😕 Email does not exist', {
+              position: "bottom-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+          });
+      }
+      setload(false)
+      });
 
 
 
