@@ -8,6 +8,7 @@ import './App.css'
 import Registration from "./Pages/Registration";
 import Login from "./Pages/Login";
 import Home from "./Pages/Home";
+import Forgotpassword from "./Pages/Forgotpassword";
 import { ToastContainer, toast } from 'react-toastify';
 import firebaseConfig from "../firebaseConfig";
 
@@ -27,6 +28,10 @@ const router = createBrowserRouter(
               <Route
               path="/login"
               element={<Login/>}
+            />
+              <Route
+              path="/Forgotpassword"
+              element={<Forgotpassword/>}
             />
               <Route
               path="/Home"

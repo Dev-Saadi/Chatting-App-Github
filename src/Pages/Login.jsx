@@ -3,10 +3,12 @@ import TextField from '@mui/material/TextField';
 import { ThreeDots } from 'react-loader-spinner'
 import Button from '@mui/material/Button';
 import loginimg from '../assets/loginimg.jpg'
+import Google from '../assets/Google.png'
+import facebook from '../assets/facebook.png'
 import { Link,useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Alert from '@mui/material/Alert';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword,GoogleAuthProvider,signInWithPopup,FacebookAuthProvider } from "firebase/auth";
 import { PiEyeClosed } from 'react-icons/pi'
 import { FaRegEye } from 'react-icons/fa'
 import Image from '../Componenets/Image';
@@ -14,8 +16,14 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
+
+
 const Login = () => {
   const auth = getAuth();
+
+  const provider2 = new FacebookAuthProvider();
+
+  const provider = new GoogleAuthProvider();
 
   let navigate = useNavigate()
 
@@ -150,6 +158,17 @@ const Login = () => {
 
   }
 
+  let Popupbtn = ()=>{
+    signInWithPopup(auth, provider).then(() => {
+      console.log("done");
+    })
+  }
+  let Popupbtn2 = ()=>{
+    signInWithPopup(auth, provider2).then(() => {
+      console.log("done");
+    })
+  }
+
 
 return (
 
@@ -157,6 +176,18 @@ return (
     <div className="left">
         <div className='text_container2'>
             <h2>Log into your account!</h2>
+
+            <div className='Popupimage'>
+            <Link onClick={Popupbtn}><Image src={Google} className="Google"/></Link>
+
+            <Link onClick={Popupbtn2}><Image src={facebook} className="facebook"/></Link>
+
+            </div>
+
+
+            
+
+
             
             
             
@@ -204,6 +235,8 @@ return (
             
 
             <p className='account2'>Don’t have an account ? <Link to="/" className="focus">Sign up</Link></p>
+
+            <p className='account2'>Forgot Password <Link to="/Forgotpassword" className="focus">Click here</Link></p>
         </div>
     </div>
     <div className="right">

@@ -17,6 +17,8 @@
 }
 
 
+
+
 .registration .left{
     width: 50%;
     height: 100vh;
@@ -61,7 +63,7 @@
     font-size: 34px;
     font-weight: bold;
     color: #11175D;
-    margin-bottom: 160px;
+    margin-bottom: 50px;
 }
 .text_container .freeregister{
     font-family: var(--nunito);
@@ -173,6 +175,99 @@
     top: 40px;
     right: 20px;
 }
+
+.forgotpage{
+    display: flex;
+}
+
+.forgotpage .right{
+
+    width: 50%;
+}
+.forgotpage .left{
+
+    width: 50%;
+}
+
+.forgotpage .bg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.forgotpage .left{
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    
+}
+
+
+.forgotbutton{
+    width: 405px;
+    height: 25px;
+    
+    background: #5F35F5 !important;
+    border-radius: 10px !important;
+    padding: 34px 113px !important;
+    font-family: var(--open-sans) !important;
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    text-transform: none !important;
+    letter-spacing: 0rem !important;
+    
+}
+
+.forgotpage .left .forgotcontainer_2{
+    width: 60%;
+    
+}
+
+.forgotcontainer_2 h3{
+    font-family: var(--nunito);
+    font-size: 34px;
+    font-weight: bold;
+    color: #11175D;
+}
+
+.inputcss{
+    width: 400px;
+}
+
+.Google{
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+.facebook{
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+.Popupimage{
+    display: flex;
+}
+
+.alert2 svg{
+    margin-left: 10px;
+}
+
+.alert2{
+    width: 400px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    padding: 6px 0 !important;
+
+}
+
+
+
+
 
 
 
