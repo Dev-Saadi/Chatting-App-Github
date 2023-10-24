@@ -9,8 +9,11 @@ import Registration from "./Pages/Registration";
 import Login from "./Pages/Login";
 import Home from "./Pages/Home";
 import Forgotpassword from "./Pages/Forgotpassword";
+import Message from "./Pages/Message";
+import Notification from "./Pages/Notification";
 import { ToastContainer, toast } from 'react-toastify';
 import firebaseConfig from "../firebaseConfig";
+import Rootlayout from "./Componenets/Rootlayout";
 
 
 
@@ -21,10 +24,7 @@ const router = createBrowserRouter(
     
       
         <Route>
-              <Route
-              path="/"
-              element={<Registration/>}
-            />
+              
               <Route
               path="/login"
               element={<Login/>}
@@ -34,9 +34,27 @@ const router = createBrowserRouter(
               element={<Forgotpassword/>}
             />
               <Route
+              path="/"
+              element={<Registration/>}
+            />
+
+            <Route path="/" element={<Rootlayout/>}>
+
+            <Route
               path="/Home"
               element={<Home/>}
             />
+              <Route
+              path="/message"
+              element={<Message/>}
+            />
+              <Route
+              path="/notification"
+              element={<Notification/>}
+            />
+
+            </Route>
+            
         </Route>
      
   )

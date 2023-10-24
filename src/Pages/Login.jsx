@@ -6,7 +6,7 @@ import loginimg from '../assets/loginimg.jpg'
 import Google from '../assets/Google.png'
 import facebook from '../assets/facebook.png'
 import { Link,useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Alert from '@mui/material/Alert';
 import { getAuth, signInWithEmailAndPassword,GoogleAuthProvider,signInWithPopup,FacebookAuthProvider } from "firebase/auth";
 import { PiEyeClosed } from 'react-icons/pi'
@@ -14,6 +14,10 @@ import { FaRegEye } from 'react-icons/fa'
 import Image from '../Componenets/Image';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { loggedUser } from '../slices/userSlice';
+import { useDispatch,useSelector } from 'react-redux';
+import { getDatabase, ref, set, push } from "firebase/database";
+
 
 
 
@@ -21,11 +25,25 @@ import 'react-toastify/dist/ReactToastify.css';
 const Login = () => {
   const auth = getAuth();
 
+  const dispatch = useDispatch()
+
   const provider2 = new FacebookAuthProvider();
 
   const provider = new GoogleAuthProvider();
 
+  const db = getDatabase();
+
   let navigate = useNavigate()
+
+  let data = useSelector(state=> state.loggedUser.value)
+
+
+  useEffect(()=>{
+    if(data){
+      navigate("/Home")
+    }
+
+  },[])
 
   let [logindata,setlogindata] = useState({
 
@@ -108,28 +126,30 @@ const Login = () => {
 
       signInWithEmailAndPassword(auth, logindata.email, logindata.password).then((user)=>{
 
-        console.log(user);
+        // console.log(user);
 
-        if (user.user.emailVerified) {
+        // if (user.user.emailVerified) {
           navigate("/Home")
-        }
+          dispatch(loggedUser(user.user))
+          localStorage.setItem("user",JSON.stringify(user.user))
+        // }
         
-        else{
+        // else{
 
-          toast.error('🧐 Please veify your email', {
-            position: "bottom-left",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
+        //   toast.error('🧐 Please verify your email', {
+        //     position: "bottom-left",
+        //     autoClose: 2000,
+        //     hideProgressBar: false,
+        //     closeOnClick: true,
+        //     pauseOnHover: true,
+        //     draggable: true,
+        //     progress: undefined,
+        //     theme: "light",
+        // });
 
           
 
-        }
+        // }
         setload(false)
 
       })
@@ -159,8 +179,21 @@ const Login = () => {
   }
 
   let Popupbtn = ()=>{
-    signInWithPopup(auth, provider).then(() => {
-      console.log("done");
+    signInWithPopup(auth, provider).then((user) => {
+      navigate("/Home")
+      dispatch(loggedUser(user.user))
+          localStorage.setItem("user",JSON.stringify(user.user))
+
+      // console.log("google",user);
+
+      set(push(ref(db, 'users')), {
+        username: user.user.displayName,
+        email: user.user.email,
+        profile_picture : user.user.photoURL
+      });
+
+
+ 
     })
   }
   let Popupbtn2 = ()=>{
@@ -236,7 +269,7 @@ return (
 
             <p className='account2'>Don’t have an account ? <Link to="/" className="focus">Sign up</Link></p>
 
-            <p className='account2'>Forgot Password <Link to="/Forgotpassword" className="focus">Click here</Link></p>
+            <p className='account2'>Forgot Password ? <Link to="/Forgotpassword" className="focus">Click here</Link></p>
         </div>
     </div>
     <div className="right">

@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Link,useNavigate } from 'react-router-dom';
 import bg from '../assets/bg.png'
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Alert from '@mui/material/Alert';
 import { PiEyeClosed } from 'react-icons/pi'
 import { FaRegEye } from 'react-icons/fa'
@@ -11,14 +11,30 @@ import Image from '../Componenets/Image';
 import { ThreeDots } from 'react-loader-spinner'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
+import { getDatabase, ref, set, push } from "firebase/database";
+import { useSelector } from 'react-redux';
 
 
 const Registration = () => {
 
     const auth = getAuth();
+
+    const db = getDatabase();
     
     let navigate = useNavigate()
+
+    let data = useSelector(state=> state.loggedUser.value)
+
+
+  useEffect(()=>{
+    if(data){
+      navigate("/Home")
+    }
+
+  },[])
+
+    
 
 
     let [formdata,setFormdata] = useState({
@@ -97,37 +113,56 @@ const Registration = () => {
             
             
 
-            createUserWithEmailAndPassword(auth, formdata.email, formdata.password).then(()=>{
+            createUserWithEmailAndPassword(auth, formdata.email, formdata.password).then((users)=>{
 
-                sendEmailVerification(auth.currentUser).then(()=>{
 
-                    setFormdata({
-                        fullname: "",
-                        email: "",
-                        password: ""
-                    })
+                updateProfile(auth.currentUser, {
+                    displayName: formdata.fullname, 
+                    photoURL: "https://firebasestorage.googleapis.com/v0/b/chatting-application-ff0ab.appspot.com/o/download.png?alt=media&token=cb810771-ce85-4262-b58d-7323c8067b3c"
+                  }).then(() => {
 
-                    setload(false)
+                    sendEmailVerification(auth.currentUser).then(()=>{
 
-                    toast.success('👍 Registration Sucessfull! Please veify your email', {
-                        position: "bottom-left",
-                        autoClose: 2000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-
-                    setTimeout(()=>{
-                        navigate("/Login")
+                        setFormdata({
+                            fullname: "",
+                            email: "",
+                            password: ""
+                        })
     
-                    },1000)
+                        setload(false)
+    
+                        toast.success('👍 Registration Sucessfull! Please veify your email', {
+                            position: "bottom-left",
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
+    
+                        setTimeout(()=>{
+                            navigate("/Login")
+        
+                        },1000)
+    
+    
+                    }).then(() => {
+                        console.log(users.user.uid);
 
+                        set(ref(db, 'users/' + users.user.uid ), {
+                            username: formdata.fullname,
+                            email: formdata.email,
+                            profile_picture : "https://firebasestorage.googleapis.com/v0/b/chatting-application-ff0ab.appspot.com/o/download.png?alt=media&token=cb810771-ce85-4262-b58d-7323c8067b3c"
+                          });
+                        
+                    })
+    
+                    
+                  })
 
-                })
-
+                
 
               
                 

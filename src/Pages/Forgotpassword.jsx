@@ -29,8 +29,10 @@ const Forgotpassword = () => {
       setemailerror("Email required")
       
       
+    }else{
+
+      setload(true)
     }
-    setload(true)
     
 
     sendPasswordResetEmail(auth, email).then(() => {
