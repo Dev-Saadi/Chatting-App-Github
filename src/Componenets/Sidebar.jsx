@@ -59,8 +59,8 @@ const Sidebar = () => {
          <Link to="/setting"><AiOutlineSetting className='icon'/></Link>   
         </li>
 
-        <li onClick={logoutbtn}>
-          <Link to="/logout"><RiLogoutBoxRLine className='icon'/></Link>  
+        <li  onClick={logoutbtn}>
+          <RiLogoutBoxRLine className='icon'/> 
         </li>
     </ul>
 

@@ -87,10 +87,14 @@ const UserList = () => {
     });
   },[])
 
-  // let handleCancel =(item)=>{
+  let handleCancel =(item)=>{
 
-  //   remove(ref(db, 'friendrequest/' + item.friendid))
-  // }
+    remove(ref(db, 'friendrequest'), {
+     
+      whoRecieveName: item.whorecievename,
+      whoRecieveId: item.whorecieveid
+    })
+  }
 
 
   useEffect(()=>{
@@ -149,7 +153,7 @@ const UserList = () => {
 
     
 
-   {/* {reqlist.includes(item.userid + userInfo.uid) || reqlist.includes(userInfo.uid + item.userid) ? <Button onClick={()=>handleCancel(item)} variant='contained'>Cancel</Button> : null} */}
+   {reqlist.includes(item.userid + userInfo.uid)  ? <Button onClick={()=>handleCancel(item)} variant='contained'>Cancel</Button> : null}
 
     
     

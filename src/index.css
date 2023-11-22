@@ -315,6 +315,10 @@
     color: #5F35F5;
 }
 
+.icon{
+    cursor: pointer;
+}
+
 .active:before{
     position: absolute;
     background: whitesmoke;
@@ -416,6 +420,10 @@
 
 .list:last-child{
     border-bottom: 0;
+}
+
+.logoutPointer{
+    cursor: pointer;
 }
 
 

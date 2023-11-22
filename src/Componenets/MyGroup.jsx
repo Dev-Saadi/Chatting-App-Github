@@ -69,6 +69,8 @@ const MyGroup = () => {
     setgname(item.groupname)
     setOpen(true)
   };
+
+  
   const handleClose = () => setOpen(false);
 
   const db = getDatabase();
@@ -103,6 +105,16 @@ const MyGroup = () => {
 
     
 
+    
+
+  }
+
+
+  let handleAccept = (item)=>{
+
+    console.log(item);
+    
+
   }
 
 
@@ -126,7 +138,7 @@ const MyGroup = () => {
     <h4>{item.groupname}</h4>
     <Button onClick={()=>deleteMygroupbtn(item)} variant="contained" color='error'>Delete</Button>
     <Button onClick={()=>handleOpen(item)} variant="contained" color='success'>Request</Button>
-    <Button variant="contained" color='success'>Members</Button>
+    <Button onClick={()=>handleOpen(item)} variant="contained" color='success'>Members</Button>
 
     </div>
 
@@ -144,7 +156,7 @@ const MyGroup = () => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Group Request by {gname}
+            Group Requests in {gname}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
@@ -178,7 +190,7 @@ const MyGroup = () => {
 
                       <div className='flex'>
 
-                      <Button variant="contained" color='success'>Accept</Button>
+                      <Button onClick={()=>handleAccept(item)} variant="contained" color='success'>Accept</Button>
                       </div>
 
                       
@@ -214,6 +226,8 @@ const MyGroup = () => {
           </Typography>
         </Box>
       </Modal>
+
+      
 
     
 

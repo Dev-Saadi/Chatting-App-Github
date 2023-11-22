@@ -80,6 +80,53 @@ const Grouplist = () => {
   }
 
 
+  let [groupfrndreq, setgroupfrndreq] = useState([]);
+
+  useEffect(()=>{
+
+    const groupfrndreqRef = ref(db, 'grouprequest');
+    onValue(groupfrndreqRef , (snapshot) => {
+      let arr = []
+      snapshot.forEach(item=>{
+       
+          
+            
+              
+              arr.push(item.val().whosendid + item.val().gid);
+            
+            
+          
+        
+      })
+      setgroupfrndreq(arr)
+      
+    });
+    
+
+  },[]);
+
+
+  let groupCancelbtn = (item)=>{
+
+    remove(ref(db, 'grouprequest'), {
+     
+      whosendid: item.uid,
+    });
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+  
+
 
 
   return (
@@ -96,8 +143,38 @@ const Grouplist = () => {
 
         <img src={gimg1} />
         <h4>{item.groupname}</h4>
+
+        {groupfrndreq.includes(item.gid + data.uid) || groupfrndreq.includes(data.uid + item.gid) ?
+            
         
-        <Button onClick={()=>handleGroupJoin(item)} variant="contained">Join</Button>
+            
+            <Button color='secondary' variant="contained">Pending</Button>
+            :
+            <Button onClick={()=>handleGroupJoin(item)}  variant="contained">Join</Button>
+            
+            
+
+
+        }
+
+            {groupfrndreq.includes(data.uid + item.gid) 
+
+            ? 
+            <Button onClick={()=>groupCancelbtn(item)} color='error' variant="contained">Cancel</Button>
+
+            : 
+
+            null
+
+
+            }
+
+
+        
+        
+        
+        
+        
 
         </div>
         ))}
