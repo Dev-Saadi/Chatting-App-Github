@@ -6,12 +6,12 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { getDatabase, ref, onValue, remove, set, push  } from "firebase/database";
+import { getDatabase, ref, onValue, remove, set, push } from "firebase/database";
 
 
 
 const style = {
-  
+
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -29,87 +29,87 @@ const Grouplist = () => {
 
   let [grouplist, setgrouplist] = useState([]);
 
-  let data = useSelector(state=> state.loggedUser.value);
+  let data = useSelector(state => state.loggedUser.value);
 
   const [open, setOpen] = useState(false);
   const [gname, setgroupname] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  let handleCreategroup = ()=>{
-    
-    set(push(ref(db,'group')),{
+  let handleCreategroup = () => {
+
+    set(push(ref(db, 'group')), {
       groupname: gname,
       adminid: data.uid,
       adminName: data.displayName
 
-    }).then(()=>{
+    }).then(() => {
       setOpen(false)
     })
   }
 
 
 
-  useEffect(()=>{
+  useEffect(() => {
     const groupRef = ref(db, 'group');
     onValue(groupRef, (snapshot) => {
       let arr = []
-      snapshot.forEach(item=>{
-       
-          if (item.val().adminid != data.uid) {
-            
-            arr.push({...item.val(),gid:item.key});
-          }
-        
+      snapshot.forEach(item => {
+
+        if (item.val().adminid != data.uid) {
+
+          arr.push({ ...item.val(), gid: item.key });
+        }
+
       })
       setgrouplist(arr)
     });
-  },[]);
+  }, []);
 
-  let handleGroupJoin = (item)=>{
+  let handleGroupJoin = (item) => {
     console.log(item);
-    set(push(ref(db,'grouprequest')),{
-    ...item,
-    whosendid: data.uid,
-    whosendname: data.displayName,
+    set(push(ref(db, 'grouprequest')), {
+      ...item,
+      whosendid: data.uid,
+      whosendname: data.displayName,
 
 
-    }).then(()=>{
-      
+    }).then(() => {
+
     })
   }
 
 
   let [groupfrndreq, setgroupfrndreq] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
 
     const groupfrndreqRef = ref(db, 'grouprequest');
-    onValue(groupfrndreqRef , (snapshot) => {
+    onValue(groupfrndreqRef, (snapshot) => {
       let arr = []
-      snapshot.forEach(item=>{
-       
-          
-            
-              
-              arr.push(item.val().whosendid + item.val().gid);
-            
-            
-          
-        
+      snapshot.forEach(item => {
+
+
+
+
+        arr.push(item.val().whosendid + item.val().gid);
+
+
+
+
       })
       setgroupfrndreq(arr)
-      
+
     });
-    
-
-  },[]);
 
 
-  let groupCancelbtn = (item)=>{
+  }, []);
+
+
+  let groupCancelbtn = (item) => {
 
     remove(ref(db, 'grouprequest'), {
-     
+
       whosendid: item.uid,
     });
 
@@ -125,66 +125,63 @@ const Grouplist = () => {
 
 
 
-  
+
 
 
 
   return (
     <div className='box'>
-        <h3>Group List
+      <h3>Group List
         <Button onClick={handleOpen} className='Groupbtn' variant="contained">Create Group</Button>
-        </h3>
+      </h3>
 
-        
 
-        {grouplist.map(item=>(
+
+      {grouplist.map(item => (
 
         <div className='list'>
 
-        <img src={gimg1} />
-        <h4>{item.groupname}</h4>
+          <img src={gimg1} />
+          <h4>{item.groupname}</h4>
 
-        {groupfrndreq.includes(item.gid + data.uid) || groupfrndreq.includes(data.uid + item.gid) ?
-            
-        
-            
+          {groupfrndreq.includes(item.gid + data.uid) || groupfrndreq.includes(data.uid + item.gid) ?
+
+
+
             <Button color='secondary' variant="contained">Pending</Button>
             :
-            <Button onClick={()=>handleGroupJoin(item)}  variant="contained">Join</Button>
-            
-            
+            <Button onClick={() => handleGroupJoin(item)} variant="contained">Join</Button>
 
 
-        }
-
-            {groupfrndreq.includes(data.uid + item.gid) 
-
-            ? 
-            <Button onClick={()=>groupCancelbtn(item)} color='error' variant="contained">Cancel</Button>
-
-            : 
-
-            null
 
 
-            }
+          }
+
+          {groupfrndreq.includes(data.uid + item.gid)
+
+            &&
+            <Button onClick={() => groupCancelbtn(item)} color='error' variant="contained">Cancel</Button>
 
 
-        
-        
-        
-        
-        
+
+          }
+
+
+
+
+
+
+
 
         </div>
-        ))}
+      ))}
 
 
 
 
 
 
-        <Modal
+      <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -195,21 +192,21 @@ const Grouplist = () => {
             Create Group
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          <TextField onChange={(e)=>setgroupname(e.target.value)} id="standard-basic" label="Group Name" variant="standard" />
+            <TextField onChange={(e) => setgroupname(e.target.value)} id="standard-basic" label="Group Name" variant="standard" />
 
-          <div className='Createbtn'>
+            <div className='Createbtn'>
 
-          <Button onClick={handleCreategroup} variant="contained">Create</Button>
-          </div>
-          
+              <Button onClick={handleCreategroup} variant="contained">Create</Button>
+            </div>
+
           </Typography>
         </Box>
       </Modal>
-        
+
 
     </div>
 
-    
+
   )
 }
 

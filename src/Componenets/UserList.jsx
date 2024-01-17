@@ -9,9 +9,9 @@ import { useSelector } from 'react-redux';
 const UserList = () => {
 
   const db = getDatabase();
-  
 
-  let userInfo = useSelector((state)=>state.loggedUser.value)
+
+  let userInfo = useSelector((state) => state.loggedUser.value)
 
   let [userslist, setuserslist] = useState([]);
 
@@ -21,21 +21,21 @@ const UserList = () => {
 
   let [blocklist, setblocklist] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const userRef = ref(db, 'users');
     onValue(userRef, (snapshot) => {
-     let arr = []
-     snapshot.forEach(item=>{
-      if (userInfo.uid != item.key) {
-        
-        arr.push({...item.val(),userid: item.key});
-      }
-     })
-     setuserslist(arr)
-    });
-  },[])
+      let arr = []
+      snapshot.forEach(item => {
+        if (userInfo.uid != item.key) {
 
-  let handlefriendrequest = (info)=>{
+          arr.push({ ...item.val(), userid: item.key });
+        }
+      })
+      setuserslist(arr)
+    });
+  }, [])
+
+  let handlefriendrequest = (info) => {
 
     // console.log("whosend",userInfo.uid,userInfo.displayName);
 
@@ -45,124 +45,124 @@ const UserList = () => {
 
     const db = getDatabase();
 
-  set(push(ref(db, 'friendrequest')), {
+    set(push(ref(db, 'friendrequest')), {
       whosendname: userInfo.displayName,
       whosendid: userInfo.uid,
       whorecievename: info.username,
       whorecieveid: info.userid,
-  });
+    });
 
-    
+
 
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     const friendrequestRef = ref(db, 'friendrequest');
-    
+
     onValue(friendrequestRef, (snapshot) => {
       let arr = []
-      snapshot.forEach(item=>{
-        
-          
-          arr.push(item.val().whorecieveid + item.val().whosendid);
-        
+      snapshot.forEach(item => {
+
+
+        arr.push(item.val().whorecieveid + item.val().whosendid);
+
       })
       setreqlist(arr)
     });
 
-  },[]);
+  }, []);
 
 
-  useEffect(()=>{
+  useEffect(() => {
     const friendrequestRef = ref(db, 'friends');
     onValue(friendrequestRef, (snapshot) => {
       let arr = []
-      snapshot.forEach(item=>{
-        
-          
-          arr.push(item.val().whorecieveid + item.val().whosendid);
-        
+      snapshot.forEach(item => {
+
+
+        arr.push(item.val().whorecieveid + item.val().whosendid);
+
       })
       setfriendlist(arr)
     });
-  },[])
+  }, [])
 
-  let handleCancel =(item)=>{
+  let handleCancel = (item) => {
 
     remove(ref(db, 'friendrequest'), {
-     
+
       whoRecieveName: item.whorecievename,
       whoRecieveId: item.whorecieveid
     })
   }
 
 
-  useEffect(()=>{
-    const blockRef = ref(db,'block');
+  useEffect(() => {
+    const blockRef = ref(db, 'block');
     onValue(blockRef, (snapshot) => {
       let arr = []
-      snapshot.forEach(item=>{
-        
-          
-          arr.push(item.val().blockid + item.val().blockbyid);
-        
+      snapshot.forEach(item => {
+
+
+        arr.push(item.val().blockid + item.val().blockbyid);
+
       })
       setblocklist(arr)
     });
-  },[]);
+  }, []);
 
 
   return (
     <div className='box'>
-    <h3>User List</h3>
+      <h3>User List</h3>
 
-    {userslist.map(item=>(
-      
-      
-    <div className='list'>
+      {userslist.map(item => (
 
-    <img src={gimg1} />
-    <h4>{item.username}</h4>
-    {reqlist.includes(item.userid + userInfo.uid) || reqlist.includes(userInfo.uid + item.userid) 
-    
-    ? 
-    
-    <Button className='Pending' variant="contained" color='error'>P</Button> 
-    
-    :
 
-    friendlist.includes(item.userid + userInfo.uid) || friendlist.includes(userInfo.uid + item.userid) 
-    
-    ?
+        <div className='list'>
 
-    <Button color='success' variant="contained">F</Button> 
+          <img src={gimg1} />
+          <h4>{item.username}</h4>
+          {reqlist.includes(item.userid + userInfo.uid) || reqlist.includes(userInfo.uid + item.userid)
 
-    :
+            ?
 
-    blocklist.includes(item.userid + userInfo.uid) || blocklist.includes(userInfo.uid + item.userid) 
+            <Button className='Pending' variant="contained" color='error'>P</Button>
 
-    ?
+            :
 
-    <Button color='error' variant="contained">B</Button>
+            friendlist.includes(item.userid + userInfo.uid) || friendlist.includes(userInfo.uid + item.userid)
 
-    :
+              ?
 
-    
+              <Button color='success' variant="contained">F</Button>
 
-    <Button onClick={()=>handlefriendrequest(item)} variant="contained">+</Button> }
+              :
 
-    
+              blocklist.includes(item.userid + userInfo.uid) || blocklist.includes(userInfo.uid + item.userid)
 
-   {reqlist.includes(item.userid + userInfo.uid)  ? <Button onClick={()=>handleCancel(item)} variant='contained'>Cancel</Button> : null}
+                ?
 
-    
-    
+                <Button color='error' variant="contained">B</Button>
 
-    </div>
+                :
 
-))}
 
-   
+
+                <Button onClick={() => handlefriendrequest(item)} variant="contained">+</Button>}
+
+
+
+          {reqlist.includes(item.userid + userInfo.uid) && <Button onClick={() => handleCancel(item)} variant='contained'>Cancel</Button>}
+
+
+
+
+        </div>
+
+      ))}
+
+
 
     </div>
   )
