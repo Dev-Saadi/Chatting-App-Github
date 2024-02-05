@@ -6,9 +6,10 @@ import { TextField, Button } from '@mui/material';
 import EmojiPicker from 'emoji-picker-react';
 import { MdEmojiEmotions } from "react-icons/md";
 import { useSelector } from 'react-redux';
-import { activeChat } from '../slices/activeChatSlice';
+
 import { getDatabase, push, ref, set, onValue } from "firebase/database";
 import moment from 'moment/moment';
+
 
 
 
@@ -93,8 +94,8 @@ const Msg = () => {
 
         data &&
         <div className='msgbox'>
-            <h1>{data.activeChatName}</h1>
 
+            <h1>{data.activeChatName}</h1>
 
 
             <div className="msgContainer">

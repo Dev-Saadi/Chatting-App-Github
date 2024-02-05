@@ -94,13 +94,19 @@ const Friends = () => {
 
 
   let activeChatbtn = (item) => {
-    console.log("activeChat", item);
+
     if (data.uid == item.whosendid) {
       dispatch(activeChat({
         type: "single",
         activeChatID: item.whorecieveid,
         activeChatName: item.whorecievename
       }))
+
+      set(ref(db, 'lastMsg/' + item.whorecieveid), {
+        type: "single",
+        activeChatID: item.whorecieveid,
+        activeChatName: item.whorecievename
+      })
 
     }
     else {
@@ -109,7 +115,14 @@ const Friends = () => {
         activeChatID: item.whosendid,
         activeChatName: item.whosendname
       }))
+
+      set(ref(db, 'lastMsg/' + item.whosendid), {
+        type: "single",
+        activeChatID: item.whosendid,
+        activeChatName: item.whosendname
+      })
     }
+
   }
 
 
